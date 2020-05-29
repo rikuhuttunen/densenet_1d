@@ -333,5 +333,5 @@ class DenseNetCustom(tensorflow.keras.models.Model):
             use_global_pooling=True)(model_input)
         if include_top:
             output = Dense(num_outputs, activation="softmax")(output)
-        super(DenseNet264, self).__init__(model_input, output)
+        super().__init__(model_input, output)
 

@@ -9,7 +9,7 @@ This includes dense blocks and transition blocks.
 
 """
 
-from tensorlfow.keras.layers import BatchNormalization, Activation, Conv1D, \
+from tensorflow.keras.layers import BatchNormalization, Activation, Conv1D, \
                                     Concatenate, AveragePooling1D
 
 

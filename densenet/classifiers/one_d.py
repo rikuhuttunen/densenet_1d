@@ -313,11 +313,12 @@ class DenseNetCustom(tensorflow.keras.models.Model):
             initial_filters=64,
             initial_pool_width=3,
             initial_pool_stride=2,
-            include_top=False):
+            include_top=False,
+            **kwargs):
         if not block_sizes:
             raise ValueError("block_sizes must be specified")
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet(
+        self.inputs = Input(shape=input_shape)
+        self.output = densenet.models.one_d.DenseNet(
             k,
             block_sizes,
             conv_kernel_width,
@@ -330,8 +331,15 @@ class DenseNetCustom(tensorflow.keras.models.Model):
             initial_filters,
             initial_pool_width,
             initial_pool_stride,
-            use_global_pooling=True)(model_input)
+            use_global_pooling=True)(self.inputs)
         if include_top:
-            output = Dense(num_outputs, activation="softmax")(output)
-        super().__init__(model_input, output)
+            self.output = Dense(num_outputs, activation="softmax")(output)
+        super().__init__(inputs=self.inputs,
+                         outputs=self.output, **kwargs)
+
+    def get_config(self):
+        conf = super().get_config()
+        conf['inputs'] = self.inputs
+        conf['outputs'] = self.output
+        return conf
 

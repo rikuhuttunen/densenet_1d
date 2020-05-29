@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='densenet',
-      version='0.5',
+      version='0.6',
       description='An implementation of DenseNet for 1D inputs in Keras.',
       url='https://github.com/ankitvgupta/densenet_1d',
       author='Ankit Gupta',

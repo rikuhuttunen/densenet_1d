@@ -4,9 +4,11 @@ Author: Ankit Gupta
 
 Implementations of the core DenseNet model
 
-This module contains helper functions that define a DenseNet computational graph in Keras. Note that these functions are not immediately usable for classification, as the outputs are not softmaxed, and the functions have not been wrapped in keras.models.Model objects.
+This module contains helper functions that define a DenseNet computational graph in Keras.
+Note that these functions are not immediately usable for classification, as the outputs
+are not softmaxed, and the functions have not been wrapped in keras.models.Model objects.
 """
-from keras.layers import Conv1D, BatchNormalization, Activation, MaxPooling1D, GlobalAveragePooling1D
+from tensorflow.keras.layers import Conv1D, BatchNormalization, Activation, MaxPooling1D, GlobalAveragePooling1D
 from densenet.blocks.one_d import dense_block, transition_block
 
 

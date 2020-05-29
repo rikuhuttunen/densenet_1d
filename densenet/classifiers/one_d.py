@@ -12,10 +12,24 @@ from tensorflow.keras.layers import Input, Conv1D, Dense
 import densenet.models.one_d
 
 
-class DenseNet121(tensorflow.keras.models.Model):
+def DenseNet121(input_shape,
+                num_outputs=1000,
+                k=32,
+                conv_kernel_width=3,
+                bottleneck_size=4,
+                transition_pool_size=2,
+                transition_pool_stride=2,
+                theta=0.5,
+                initial_conv_width=7,
+                initial_stride=2,
+                initial_filters=64,
+                initial_pool_width=3,
+                initial_pool_stride=2,
+                include_top=False):
     """  
-    Create a Keras Model Object that is an implementation of DenseNet121 
-    :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
+    Create a Keras Model Object that is an implementation of DenseNet121
+    :param input_shape: The shape of the inputs without the batch dimension.
+        This should be a valid 1D sequence, such as (244, 25). 
     :param num_outputs: the number of classes to predict
     :param k: The "growth rate" of the DenseNet model
     :param conv_kernel_width: The kernel width of each convolution in the dense blocks.
@@ -29,45 +43,43 @@ class DenseNet121(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
-            input_shape,
-            num_outputs=1000,
-            k=32,
-            conv_kernel_width=3,
-            bottleneck_size=4,
-            transition_pool_size=2,
-            transition_pool_stride=2,
-            theta=0.5,
-            initial_conv_width=7,
-            initial_stride=2,
-            initial_filters=64,
-            initial_pool_width=3,
-            initial_pool_stride=2,
-            include_top=False):
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet121(
-            k,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=True)(model_input)
-        if include_top:
-            output = Dense(num_outputs, activation="softmax")(output)
-        super(DenseNet121, self).__init__(model_input, output)
+    model_input = Input(shape=input_shape)
+    output = densenet.models.one_d.DenseNet121(
+        k,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+        use_global_pooling=True)(model_input)
+    if include_top:
+        output = Dense(num_outputs, activation="softmax")(output)
+    return tensorflow.keras.models.Model(inputs=model_input, outputs=output)
 
 
-class DenseNet169(tensorflow.keras.models.Model):
+def DenseNet169(input_shape,
+                num_outputs=1000,
+                k=32,
+                conv_kernel_width=3,
+                bottleneck_size=4,
+                transition_pool_size=2,
+                transition_pool_stride=2,
+                theta=0.5,
+                initial_conv_width=7,
+                initial_stride=2,
+                initial_filters=64,
+                initial_pool_width=3,
+                initial_pool_stride=2,
+                include_top=False):
     """  
     Create a Keras Model Object that is an implementation of DenseNet169
-    :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
+    :param input_shape: The shape of the inputs without the batch dimension.
+        This should be a valid 1D sequence, such as (244, 25). 
     :param num_outputs: the number of classes to predict
     :param k: The "growth rate" of the DenseNet model
     :param conv_kernel_width: The kernel width of each convolution in the dense blocks.
@@ -81,45 +93,43 @@ class DenseNet169(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
-            input_shape,
-            num_outputs=1000,
-            k=32,
-            conv_kernel_width=3,
-            bottleneck_size=4,
-            transition_pool_size=2,
-            transition_pool_stride=2,
-            theta=0.5,
-            initial_conv_width=7,
-            initial_stride=2,
-            initial_filters=64,
-            initial_pool_width=3,
-            initial_pool_stride=2,
-            include_top=False):
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet169(
-            k,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=True)(model_input)
-        if include_top:
-            output = Dense(num_outputs, activation="softmax")(output)
-        super(DenseNet169, self).__init__(model_input, output)
+    model_input = Input(shape=input_shape)
+    output = densenet.models.one_d.DenseNet169(
+        k,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+        use_global_pooling=True)(model_input)
+    if include_top:
+        output = Dense(num_outputs, activation="softmax")(output)
+    return tensorflow.keras.models.Model(inputs=model_input, outputs=output)
 
 
-class DenseNet201(tensorflow.keras.models.Model):
+def DenseNet201(input_shape,
+                num_outputs=1000,
+                k=32,
+                conv_kernel_width=3,
+                bottleneck_size=4,
+                transition_pool_size=2,
+                transition_pool_stride=2,
+                theta=0.5,
+                initial_conv_width=7,
+                initial_stride=2,
+                initial_filters=64,
+                initial_pool_width=3,
+                initial_pool_stride=2,
+                include_top=False):
     """  
     Create a Keras Model Object that is an implementation of DenseNet201
-    :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
+    :param input_shape: The shape of the inputs without the batch dimension.
+        This should be a valid 1D sequence, such as (244, 25). 
     :param num_outputs: the number of classes to predict
     :param k: The "growth rate" of the DenseNet model
     :param conv_kernel_width: The kernel width of each convolution in the dense blocks.
@@ -133,45 +143,43 @@ class DenseNet201(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
-            input_shape,
-            num_outputs=1000,
-            k=32,
-            conv_kernel_width=3,
-            bottleneck_size=4,
-            transition_pool_size=2,
-            transition_pool_stride=2,
-            theta=0.5,
-            initial_conv_width=7,
-            initial_stride=2,
-            initial_filters=64,
-            initial_pool_width=3,
-            initial_pool_stride=2,
-            include_top=False):
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet201(
-            k,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=True)(model_input)
-        if include_top:
-            output = Dense(num_outputs, activation="softmax")(output)
-        super(DenseNet201, self).__init__(model_input, output)
+    model_input = Input(shape=input_shape)
+    output = densenet.models.one_d.DenseNet201(
+        k,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+        use_global_pooling=True)(model_input)
+    if include_top:
+        output = Dense(num_outputs, activation="softmax")(output)
+    return tensorflow.keras.models.Model(inputs=model_input, outputs=output)
 
 
-class DenseNet264(tensorflow.keras.models.Model):
+def DenseNet264(input_shape,
+                num_outputs=1000,
+                k=32,
+                conv_kernel_width=3,
+                bottleneck_size=4,
+                transition_pool_size=2,
+                transition_pool_stride=2,
+                theta=0.5,
+                initial_conv_width=7,
+                initial_stride=2,
+                initial_filters=64,
+                initial_pool_width=3,
+                initial_pool_stride=2,
+                include_top=False):
     """  
     Create a Keras Model Object that is an implementation of DenseNet264
-    :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
+    :param input_shape: The shape of the inputs without the batch dimension.
+        This should be a valid 1D sequence, such as (244, 25). 
     :param num_outputs: the number of classes to predict
     :param k: The "growth rate" of the DenseNet model
     :param conv_kernel_width: The kernel width of each convolution in the dense blocks.
@@ -185,42 +193,39 @@ class DenseNet264(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
-            input_shape,
-            num_outputs=1000,
-            k=32,
-            conv_kernel_width=3,
-            bottleneck_size=4,
-            transition_pool_size=2,
-            transition_pool_stride=2,
-            theta=0.5,
-            initial_conv_width=7,
-            initial_stride=2,
-            initial_filters=64,
-            initial_pool_width=3,
-            initial_pool_stride=2,
-            include_top=False):
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet264(
-            k,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=True)(model_input)
-        if include_top:
-            output = Dense(num_outputs, activation="softmax")(output)
-        super(DenseNet264, self).__init__(model_input, output)
+    model_input = Input(shape=input_shape)
+    output = densenet.models.one_d.DenseNet264(
+        k,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+         use_global_pooling=True)(model_input)
+    if include_top:
+        output = Dense(num_outputs, activation="softmax")(output)
+    return tensorflow.keras.models.Model(inputs=model_input, outputs=output)
 
 
-class DenseFCN(tensorflow.keras.models.Model):
+def DenseFCN(input_shape,
+             num_outputs=5,
+             k=32,
+             block_sizes=[6, 12, 24, 16],  # Default to DenseNet121
+             conv_kernel_width=3,
+             bottleneck_size=4,
+             transition_pool_size=2,
+             transition_pool_stride=2,
+             theta=0.5,
+             initial_conv_width=7,
+             initial_stride=2,
+             initial_filters=64,
+             initial_pool_width=3,
+             initial_pool_stride=2):
     """  
     Create a Keras Model Object that is an implementation of DenseNet with a
     custom number of parameters. The number of layers per dense block can be 
@@ -241,12 +246,32 @@ class DenseFCN(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
+    if not block_sizes:
+        raise ValueError("block_sizes must be specified")
+    model_input = Input(shape=input_shape)
+    output = densenet.models.one_d.DenseNet(k,
+        block_sizes,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+        use_global_pooling=False)(model_input)
+     
+    output = Conv2D(num_outputs, (1, 1), padding='same', activation='sigmoid')(x)
+    return tensorflow.keras.models.Model(inputs=model_input, outputs=output)
+
+
+def DenseNetCustom(#tensorflow.keras.models.Model):
             input_shape,
-            num_outputs=5,
+            num_outputs=1000,
             k=32,
-            block_sizes=[6, 12, 24, 16],  # Default to DenseNet121
+            block_sizes=None,
             conv_kernel_width=3,
             bottleneck_size=4,
             transition_pool_size=2,
@@ -256,30 +281,8 @@ class DenseFCN(tensorflow.keras.models.Model):
             initial_stride=2,
             initial_filters=64,
             initial_pool_width=3,
-            initial_pool_stride=2):
-        if not block_sizes:
-            raise ValueError("block_sizes must be specified")
-        model_input = Input(shape=input_shape)
-        output = densenet.models.one_d.DenseNet(
-            k,
-            block_sizes,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=False)(model_input)
-        # output = Dense(num_outputs, activation="softmax")(output)
-        output = Conv2D(num_outputs, (1, 1), padding='same', activation='sigmoid')(x)
-        super(DenseFCN, self).__init__(model_input, output)
-
-
-class DenseNetCustom(tensorflow.keras.models.Model):
+            initial_pool_stride=2,
+            include_top=False):
     """  
     Create a Keras Model Object that is an implementation of DenseNet with a custom number of parameters. The number of layers per dense block can be specified by block_sizes.
     :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
@@ -297,49 +300,23 @@ class DenseNetCustom(tensorflow.keras.models.Model):
     :param initial_pool_width: pool_size for the one pooling before the dense blocks
     :param initial_pool_stride: stride for the one pooling before the dense blocks 
     """
-    def __init__(
-            self,
-            input_shape,
-            num_outputs=1000,
-            k=32,
-            block_sizes=None,
-            conv_kernel_width=3,
-            bottleneck_size=4,
-            transition_pool_size=2,
-            transition_pool_stride=2,
-            theta=0.5,
-            initial_conv_width=7,
-            initial_stride=2,
-            initial_filters=64,
-            initial_pool_width=3,
-            initial_pool_stride=2,
-            include_top=False,
-            **kwargs):
-        if not block_sizes:
-            raise ValueError("block_sizes must be specified")
-        self.inputs = Input(shape=input_shape)
-        self.outputs = densenet.models.one_d.DenseNet(
-            k,
-            block_sizes,
-            conv_kernel_width,
-            bottleneck_size,
-            transition_pool_size,
-            transition_pool_stride,
-            theta,
-            initial_conv_width,
-            initial_stride,
-            initial_filters,
-            initial_pool_width,
-            initial_pool_stride,
-            use_global_pooling=True)(self.inputs)
-        if include_top:
-            self.outputs = Dense(num_outputs, activation="softmax")(self.outputs)
-        super().__init__(inputs=self.inputs,
-                         outputs=self.outputs, **kwargs)
-
-    def get_config(self):
-        conf = super().get_config()
-        conf['inputs'] = self.inputs
-        conf['outputs'] = self.outputs
-        return conf
-
+    if not block_sizes:
+        raise ValueError("block_sizes must be specified")
+    inputs = Input(shape=input_shape)
+    outputs = densenet.models.one_d.DenseNet(
+        k,
+        block_sizes,
+        conv_kernel_width,
+        bottleneck_size,
+        transition_pool_size,
+        transition_pool_stride,
+        theta,
+        initial_conv_width,
+        initial_stride,
+        initial_filters,
+        initial_pool_width,
+        initial_pool_stride,
+        use_global_pooling=True)(inputs)
+    if include_top:
+        outputs = Dense(num_outputs, activation="softmax")(outputs)
+    return tensorflow.keras.models.Model(inputs=inputs, outputs=outputs)

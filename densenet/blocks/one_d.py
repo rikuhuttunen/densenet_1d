@@ -66,7 +66,8 @@ def dense_block(k, num_layers, kernel_width, bottleneck_size):
         for _ in range(num_layers):
             x = H_l(k, bottleneck_size, kernel_width)(x)
             layers_to_concat.append(x)
-            x = Concatenate(axis=-1)(layers_to_concat)
+            # https://github.com/tensorflow/tensorflow/issues/30355
+            x = Concatenate(axis=-1)(layers_to_concat[:])
         return x
     return f
 

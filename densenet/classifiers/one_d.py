@@ -220,7 +220,7 @@ class DenseNet264(tensorflow.keras.models.Model):
         super(DenseNet264, self).__init__(model_input, output)
 
 
-class DenseFCN()
+class DenseFCN(tensorflow.keras.models.Model):
     """  
     Create a Keras Model Object that is an implementation of DenseNet with a
     custom number of parameters. The number of layers per dense block can be 

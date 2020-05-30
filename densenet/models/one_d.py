@@ -9,7 +9,7 @@ Note that these functions are not immediately usable for classification, as the 
 are not softmaxed, and the functions have not been wrapped in keras.models.Model objects.
 """
 from tensorflow.keras.layers import Conv1D, BatchNormalization, Activation, MaxPooling1D, GlobalAveragePooling1D
-from densenet.blocks.one_d import dense_block, transition_block
+from densenet.blocks.one_d import dense_block, transition_block, squeeze_excite_block
 
 
 def DenseNet(
@@ -25,7 +25,8 @@ def DenseNet(
         initial_filters,
         initial_pool_width,
         initial_pool_stride,
-        use_global_pooling):
+        use_global_pooling,
+        se=False):
     def f(x):
         x = Conv1D(
             initial_filters,
@@ -38,6 +39,8 @@ def DenseNet(
             pool_size=initial_pool_width,
             strides=initial_pool_stride,
             padding="same")(x)
+        if se:
+            x = squeeze_excite_block(x)
 
         # Add all but the last dense block
         for block_size in block_sizes[:-1]:
@@ -45,11 +48,13 @@ def DenseNet(
                 k,
                 block_size,
                 conv_kernel_width,
-                bottleneck_size)(x)
+                bottleneck_size,
+                se=se)(x)
             x = transition_block(
                 pool_size=transition_pool_size,
                 stride=transition_pool_stride,
-                theta=theta)(x)
+                theta=theta,
+                se=se)(x)
 
         # Add the last dense block
         final_block_size = block_sizes[-1]

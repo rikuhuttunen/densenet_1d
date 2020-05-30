@@ -11,6 +11,34 @@ This includes dense blocks and transition blocks.
 
 from tensorflow.keras.layers import BatchNormalization, Activation, Conv1D, \
                                     Concatenate, AveragePooling1D
+from tensorflow.keras import backend, layers
+
+
+def squeeze_excite_block(input_tensor, ratio=8):
+    """Create a channel-wise squeeze-excite block.
+    Args:
+        input_tensor: input Keras tensor
+        ratio: number of output filters
+    Returns: a Keras tensor
+    
+    References
+    -   [Squeeze and Excitation Networks](https://arxiv.org/abs/1709.01507)
+    """
+    init = input_tensor
+    channel_axis = 1 if backend.image_data_format() == "channels_first" else -1
+    filters = init.shape[channel_axis]#_tensor_shape(init)[channel_axis]
+    se_shape = (1, filters)
+
+    se = layers.GlobalAvgPool1D()(init)
+    se = layers.Reshape(se_shape)(se)
+    se = layers.Dense(filters // ratio, activation='relu', kernel_initializer='he_normal', use_bias=False)(se)
+    se = layers.Dense(filters, activation='sigmoid', kernel_initializer='he_normal', use_bias=False)(se)
+
+    if backend.image_data_format() == 'channels_first':
+        se = layers.Permute((3, 1, 2))(se)
+
+    x = layers.multiply([init, se])
+    return x
 
 
 def H_l(k, bottleneck_size, kernel_width):
@@ -50,7 +78,7 @@ def H_l(k, bottleneck_size, kernel_width):
     return f
 
 
-def dense_block(k, num_layers, kernel_width, bottleneck_size):
+def dense_block(k, num_layers, kernel_width, bottleneck_size, se=False):
     """
     A single dense block of the DenseNet
     
@@ -68,11 +96,13 @@ def dense_block(k, num_layers, kernel_width, bottleneck_size):
             layers_to_concat.append(x)
             # https://github.com/tensorflow/tensorflow/issues/30355
             x = Concatenate(axis=-1)(layers_to_concat[:])
+            if se:
+                x = squeeze_excite_block(x)
         return x
     return f
 
 
-def transition_block(pool_size=2, stride=2, theta=0.5):
+def transition_block(pool_size=2, stride=2, theta=0.5, se=False):
     """
     A single transition block of the DenseNet
     
@@ -98,5 +128,7 @@ def transition_block(pool_size=2, stride=2, theta=0.5):
             pool_size=pool_size,
             strides=stride,
             padding="same")(x)
+        if se:
+            x = squeeze_excite_block(x)
         return x
     return f

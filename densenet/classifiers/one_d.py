@@ -282,7 +282,8 @@ def DenseNetCustom(#tensorflow.keras.models.Model):
             initial_filters=64,
             initial_pool_width=3,
             initial_pool_stride=2,
-            include_top=False):
+            include_top=False,
+            se=True):
     """  
     Create a Keras Model Object that is an implementation of DenseNet with a custom number of parameters. The number of layers per dense block can be specified by block_sizes.
     :param input_shape: The shape of the inputs without the batch dimension. This should be a valid 1D sequence, such as (244, 25). 
@@ -316,7 +317,8 @@ def DenseNetCustom(#tensorflow.keras.models.Model):
         initial_filters,
         initial_pool_width,
         initial_pool_stride,
-        use_global_pooling=True)(inputs)
+        use_global_pooling=True,
+        se=se)(inputs)
     if include_top:
         outputs = Dense(num_outputs, activation="softmax")(outputs)
     return tensorflow.keras.models.Model(inputs=inputs, outputs=outputs)
